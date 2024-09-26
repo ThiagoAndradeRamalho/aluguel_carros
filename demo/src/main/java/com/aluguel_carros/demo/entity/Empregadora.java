@@ -1,7 +1,5 @@
 package com.aluguel_carros.demo.entity;
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,21 +9,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Cliente")
-public class Cliente {
-
+@Table(name = "Empregadora")
+public class Empregadora {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String nome;
-    private String rg;
-    private String cpf;
-    private String endereco;
-    private String profissao;
+    private Float salario;
 
 }
