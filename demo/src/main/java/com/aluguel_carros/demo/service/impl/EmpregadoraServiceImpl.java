@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.aluguel_carros.demo.service.EmpregadoraService;
+import com.aluguel_carros.demo.model.Empregadora;
 import com.aluguel_carros.demo.repository.EmpregadoraRepository;
-import com.aluguel_carros.demo.entity.Empregadora;
 
 @Service
 public class EmpregadoraServiceImpl implements EmpregadoraService{

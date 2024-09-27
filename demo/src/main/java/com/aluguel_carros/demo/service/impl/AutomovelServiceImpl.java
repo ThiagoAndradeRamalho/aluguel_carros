@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.aluguel_carros.demo.service.AutomovelService;
+import com.aluguel_carros.demo.model.Automovel;
 import com.aluguel_carros.demo.repository.AutomovelRepository;
-import com.aluguel_carros.demo.entity.Automovel;
 
 @Service
 public class AutomovelServiceImpl implements AutomovelService{

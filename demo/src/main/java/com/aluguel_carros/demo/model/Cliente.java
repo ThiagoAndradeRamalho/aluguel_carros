@@ -1,8 +1,9 @@
-package com.aluguel_carros.demo.entity;
+package com.aluguel_carros.demo.model;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,38 +15,40 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Automovel")
-public class Automovel {
+@Table(name = "Cliente")
+public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(nullable = false, unique = true)
-    private String matricula;
-
-    @Column
-    private String marca;
-
-    @Column
-    private String modelo;
+    @Column(nullable = false)
+    private String nome;
 
     @Column(nullable = false, unique = true)
-    private String placa;
+    private String rg;
+    
+    @Column(nullable = false, unique = true)
+    private String cpf;
 
     @Column
-    private Integer ano;
+    private String endereco;
 
     @Column
-    private boolean disponivel;
+    private String profissao;
 
-    @OneToMany(mappedBy = "automovel")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private Set<Empregadora> enpregadoras = new HashSet<Empregadora>();
+
+    @OneToMany(mappedBy = "cliente")
     private Set<Pedido> pedidos = new HashSet<Pedido>();
 
-    @OneToMany(mappedBy = "automovel")
+    @OneToMany(mappedBy = "cliente")
     private Set<Contrato> contratos = new HashSet<Contrato>();
+
 }

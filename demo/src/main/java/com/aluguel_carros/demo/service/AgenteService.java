@@ -2,7 +2,7 @@ package com.aluguel_carros.demo.service;
 
 import java.util.List;
 
-import com.aluguel_carros.demo.entity.Agente;
+import com.aluguel_carros.demo.model.Agente;
 
 public interface AgenteService {
 

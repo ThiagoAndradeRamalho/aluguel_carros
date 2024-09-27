@@ -2,7 +2,7 @@ package com.aluguel_carros.demo.service;
 
 import java.util.List;
 
-import com.aluguel_carros.demo.entity.Contrato;
+import com.aluguel_carros.demo.model.Contrato;
 
 public interface ContratoService {
 

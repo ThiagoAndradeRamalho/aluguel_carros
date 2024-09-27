@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.aluguel_carros.demo.service.AgenteService;
+import com.aluguel_carros.demo.model.Agente;
 import com.aluguel_carros.demo.repository.AgenteRepository;
-import com.aluguel_carros.demo.entity.Agente;
 
 
 @Service

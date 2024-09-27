@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.aluguel_carros.demo.entity.Contrato;
+import com.aluguel_carros.demo.model.Contrato;
 import com.aluguel_carros.demo.service.ContratoService;
 
 

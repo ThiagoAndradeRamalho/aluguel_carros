@@ -9,12 +9,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.aluguel_carros.demo.service.CreditoService;
 import com.aluguel_carros.demo.service.CreditoService;
+import com.aluguel_carros.demo.model.Credito;
 import com.aluguel_carros.demo.repository.CreditoRepository;
-import com.aluguel_carros.demo.entity.Credito;
-import com.aluguel_carros.demo.entity.Credito;
-import com.aluguel_carros.demo.entity.Credito;
-import com.aluguel_carros.demo.entity.Credito;
-import com.aluguel_carros.demo.entity.Credito;
 
 @Service
 public class CreditoServiceImpl implements CreditoService{

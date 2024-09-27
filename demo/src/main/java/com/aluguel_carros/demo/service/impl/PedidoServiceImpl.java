@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.aluguel_carros.demo.service.PedidoService;
+import com.aluguel_carros.demo.model.Pedido;
 import com.aluguel_carros.demo.repository.PedidoRepository;
-import com.aluguel_carros.demo.entity.Pedido;
 
 @Service
 public class PedidoServiceImpl implements PedidoService{

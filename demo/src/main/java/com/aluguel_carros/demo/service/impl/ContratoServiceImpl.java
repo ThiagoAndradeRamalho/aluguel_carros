@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.aluguel_carros.demo.service.ContratoService;
+import com.aluguel_carros.demo.model.Contrato;
 import com.aluguel_carros.demo.repository.ContratoRepository;
-import com.aluguel_carros.demo.entity.Contrato;
 
 @Service
 public class ContratoServiceImpl implements ContratoService{

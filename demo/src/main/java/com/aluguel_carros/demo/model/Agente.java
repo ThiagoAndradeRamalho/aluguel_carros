@@ -1,4 +1,4 @@
-package com.aluguel_carros.demo.entity;
+package com.aluguel_carros.demo.model;
 
 import java.util.HashSet;
 import java.util.Set;
