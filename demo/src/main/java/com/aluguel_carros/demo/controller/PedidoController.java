@@ -1,6 +1,5 @@
 package com.aluguel_carros.demo.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.aluguel_carros.demo.entity.Cliente;
 import com.aluguel_carros.demo.entity.Pedido;
-import com.aluguel_carros.demo.service.ClienteService;
 import com.aluguel_carros.demo.service.PedidoService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
