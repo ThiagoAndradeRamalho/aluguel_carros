@@ -1,4 +1,4 @@
-package com.aluguel_carros.demo.controller;
+package com.aluguel_carros.demo.controller.enty;
 
 import java.util.List;
 
