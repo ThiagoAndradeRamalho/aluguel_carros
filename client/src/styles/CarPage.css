@@ -1,0 +1,70 @@
+
+body {
+    overflow: hidden; /* Esconde a barra de rolagem da página */
+}
+
+.home-section {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.menu-container {
+    width: 20%;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.logo {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+.vertical-menu {
+    width: 100%;
+}
+
+.car-content {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: first baseline;
+    padding: 20px;
+    overflow: auto;
+}
+
+.car-card {
+    margin: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.car-card img {
+    width: 100%;
+    height: auto;
+}
+
+
+.form-line{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
+/* .form-line {
+    width: 100%;
+} */
+
+input{
+    width: 100%;
+    margin: 0.5rem;
+}
+
+.car-form {
+    margin-top: -20rem;
+    width: 100%;
+}
