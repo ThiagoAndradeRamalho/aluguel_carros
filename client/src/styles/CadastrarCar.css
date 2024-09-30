@@ -1,0 +1,45 @@
+
+.form-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.form-input {
+    flex: 1; /* Permite que o campo ocupe o espaço disponível */
+    margin-right: 10px; /* Margem entre os campos */
+}
+
+.form-input:last-child {
+    margin-right: 0; /* Remove margem do último campo na linha */
+}
+
+.p-field-checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.p-field-checkbox label {
+    margin-left: 5px;
+}
+
+table {
+    width: 90%;
+    border-collapse: collapse;
+    margin: auto;
+    margin-bottom: 4rem;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.car-form {
+    padding-top: 3rem;
+}
