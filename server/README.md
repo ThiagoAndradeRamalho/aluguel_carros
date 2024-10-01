@@ -5,18 +5,18 @@ server
 ├─ .mvn
 │  └─ wrapper
 │     └─ maven-wrapper.properties
-├─ demo
 ├─ mvnw
 ├─ mvnw.cmd
 ├─ pom.xml
+├─ README.md
 └─ src
    ├─ main
    │  ├─ java
    │  │  └─ com
    │  │     └─ aluguel_carros
    │  │        └─ demo
-   │  │           ├─ bean
-   │  │           │  └─ ClienteBean.java
+   │  │           ├─ config
+   │  │           │  └─ WebConfig.java
    │  │           ├─ controller
    │  │           │  ├─ AgenteController.java
    │  │           │  ├─ AutomovelController.java
@@ -26,6 +26,8 @@ server
    │  │           │  ├─ EmpregadoraController.java
    │  │           │  └─ PedidoController.java
    │  │           ├─ DemoApplication.java
+   │  │           ├─ dto
+   │  │           │  └─ PedidoDTO.java
    │  │           ├─ model
    │  │           │  ├─ Agente.java
    │  │           │  ├─ Automovel.java

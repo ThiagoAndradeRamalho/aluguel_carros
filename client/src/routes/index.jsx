@@ -7,6 +7,7 @@ import CarDetail from '../pages/CarDetail';
 import CadastarCar from '../pages/CadastrarCar';
 import Aluguel from '../pages/Aluguel'
 import Pedidos from '../pages/Pedidos'
+import EditarCarPage from '../pages/EditarCar';
 
 const AppRoutes = () => {
   return (
@@ -19,10 +20,12 @@ const AppRoutes = () => {
         <Route path="/pedidos" element={<Pedidos />} />
         <Route path="/car-details/:id" element={<CarDetail />} />
         <Route path="/create-car" element={<CadastarCar />} />
+        <Route path="/edit-car/:id" element={<EditarCarPage />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </Router>
   );
 };
+
 
 export default AppRoutes;

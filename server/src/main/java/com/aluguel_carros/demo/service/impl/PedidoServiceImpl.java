@@ -2,87 +2,91 @@ package com.aluguel_carros.demo.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import com.aluguel_carros.demo.service.PedidoService;
+import com.aluguel_carros.demo.dto.PedidoDTO;
 import com.aluguel_carros.demo.model.Pedido;
 import com.aluguel_carros.demo.repository.PedidoRepository;
+import com.aluguel_carros.demo.service.AutomovelService;
+import com.aluguel_carros.demo.service.ClienteService;
+import com.aluguel_carros.demo.service.ContratoService;
+import com.aluguel_carros.demo.service.PedidoService;
 
 @Service
-public class PedidoServiceImpl implements PedidoService{
+public class PedidoServiceImpl implements PedidoService {
 
     @Autowired
     private PedidoRepository pedidoRepository;
 
+    @Autowired
+    private ClienteService clienteService;
+
+    @Autowired
+    private ContratoService contratoService;
+
+    @Autowired
+    private AutomovelService automovelService;
+
     @Override
-    public void addPedido(Pedido pedido) {
-        try {
-            if (pedido.getDataPedido() == null) {
-                pedido.setDataPedido(LocalDateTime.now());
-            }
-            pedidoRepository.save(pedido);
-        } catch (Exception e) {
-            throw new Error(e);
-        }        
+    public void addPedido(PedidoDTO pedidoDTO) {
+        Pedido pedido = convertToEntity(pedidoDTO);
+        pedidoRepository.save(pedido);
     }
 
     @Override
     public List<Pedido> getAllPedidos() {
-        try {
-            return pedidoRepository.findAll();
-        } catch (Exception e) {
-            throw new IllegalStateException("Error while "+e);
-        }
+        return pedidoRepository.findAll();
     }
 
     @Override
     public Pedido getPedidoById(Integer id) {
-        try {
-            Pedido pedido = pedidoRepository
-            .findById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Invalido"));
+        return pedidoRepository.findById(id).orElse(null);
+    }
 
-           return pedido;
-        } catch (Exception e) {
-            throw new IllegalStateException("Error while getting Pedido by id "+id);
+    @Override
+    public void updatePedido(Integer id, PedidoDTO pedidoDTO) {
+        if (pedidoRepository.existsById(id)) {
+            Pedido pedido = convertToEntity(pedidoDTO);
+            pedido.setId(id); // Define o ID do pedido que está sendo atualizado
+            pedidoRepository.save(pedido);
         }
     }
 
     @Override
-    public void updatePedido(Integer id, Pedido pedido) {
-        try {
-
-            
-
-            if(!getPedidoById(id).equals(pedido)) {
-                Pedido lastPedido = getPedidoById(id);
-                pedido.setId(id);
-                pedido.setDataPedido(lastPedido.getDataPedido());
-                pedidoRepository.save(pedido);
-            }
-
-        } catch (Exception e) {
-            throw new IllegalStateException("Error while updating Pedido "+pedido);
-        }
+    public void deletePedido(Integer id) {
+        pedidoRepository.deleteById(id);
     }
 
     @Override
-    public void deletePedido(Integer id){
-        try {
-
-            Pedido pedido = getPedidoById(id);
-
-            if(pedido != null){
-                pedidoRepository.delete(pedido);
-            }
-
-        } catch (Exception e) {
-            throw new IllegalStateException("Error while deleting id "+id);
-        }
+    public PedidoDTO convertToDTO(Pedido pedido) {
+        PedidoDTO dto = new PedidoDTO();
+        dto.setId(pedido.getId());
+        dto.setStatus(pedido.getStatus());
+        dto.setClienteId(pedido.getCliente() != null ? pedido.getCliente().getId() : null);
+        dto.setContratoId(pedido.getContrato() != null ? pedido.getContrato().getId() : null);
+        dto.setAutomovelId(pedido.getAutomovel() != null ? pedido.getAutomovel().getId() : null);
+        return dto;
     }
 
+    @Override
+    public Pedido convertToEntity(PedidoDTO dto) {
+        Pedido pedido = new Pedido();
+        pedido.setId(dto.getId());
+        pedido.setStatus(dto.getStatus());
+        
+        if (dto.getDataInicio() != null) {
+            String dataInicioStr = dto.getDataInicio().replace("Z", "");
+            pedido.setDataInicio(LocalDateTime.parse(dataInicioStr));
+        }
+        if (dto.getDataFim() != null) {
+            String dataFimStr = dto.getDataFim().replace("Z", "");
+            pedido.setDataFim(LocalDateTime.parse(dataFimStr));
+        }
+        
+        pedido.setCliente(clienteService.getClienteById(dto.getClienteId()));
+        pedido.setContrato(contratoService.getContratoById(dto.getContratoId()));
+        pedido.setAutomovel(automovelService.getAutomovelById(dto.getAutomovelId()));
+        return pedido;
+    }
 }

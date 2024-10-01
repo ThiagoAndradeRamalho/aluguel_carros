@@ -1,79 +1,83 @@
 package com.aluguel_carros.demo.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import com.aluguel_carros.demo.service.ContratoService;
+import com.aluguel_carros.demo.dto.ContratoDTO;
 import com.aluguel_carros.demo.model.Contrato;
 import com.aluguel_carros.demo.repository.ContratoRepository;
+import com.aluguel_carros.demo.service.AgenteService;
+import com.aluguel_carros.demo.service.AutomovelService;
+import com.aluguel_carros.demo.service.ClienteService;
+import com.aluguel_carros.demo.service.ContratoService;
 
 @Service
-public class ContratoServiceImpl implements ContratoService{
+public class ContratoServiceImpl implements ContratoService {
 
     @Autowired
     private ContratoRepository contratoRepository;
 
+    @Autowired
+    private AgenteService agenteService;
+
+    @Autowired
+    private AutomovelService automovelService;
+
+    @Autowired
+    private ClienteService clienteService;
+
     @Override
     public void addContrato(Contrato contrato) {
-        try {
-            contratoRepository.save(contrato);
-        } catch (Exception e) {
-            throw new Error(e);
-        }        
+        contratoRepository.save(contrato);
     }
 
     @Override
     public List<Contrato> getAllContratos() {
-        try {
-            return contratoRepository.findAll();
-        } catch (Exception e) {
-            throw new IllegalStateException("Error while "+e);
-        }
+        return contratoRepository.findAll();
     }
 
     @Override
     public Contrato getContratoById(Integer id) {
-        try {
-            Contrato contrato = contratoRepository
-            .findById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Invalido"));
-
-           return contrato;
-        } catch (Exception e) {
-            throw new IllegalStateException("Error while getting Contrato by id "+id);
-        }
+        return contratoRepository.findById(id).orElse(null);
     }
 
     @Override
     public void updateContrato(Integer id, Contrato contrato) {
-        try {
-
-            if(!getContratoById(id).equals(contrato)) {
-                contrato.setId(id);
-                contratoRepository.save(contrato);
-            }
-
-        } catch (Exception e) {
-            throw new IllegalStateException("Error while updating Contrato "+contrato);
+        if (contratoRepository.existsById(id)) {
+            contrato.setId(id);
+            contratoRepository.save(contrato);
         }
     }
 
     @Override
-    public void deleteContrato(Integer id){
-        try {
+    public void deleteContrato(Integer id) {
+        contratoRepository.deleteById(id);
+    }
 
-            Contrato contrato = getContratoById(id);
+    @Override
+    public ContratoDTO convertToDTO(Contrato contrato) {
+        ContratoDTO dto = new ContratoDTO();
+        dto.setId(contrato.getId());
+        dto.setTipoRegistro(contrato.getTipoRegistro());
+        dto.setAssociadoCredito(contrato.isAssociadoCredito());
+        dto.setAgenteId(contrato.getAgente().getId());
+        dto.setAutomovelId(contrato.getAutomovel().getId());
+        dto.setClienteId(contrato.getCliente().getId());
+        return dto;
+    }
 
-            if(contrato != null){
-                contratoRepository.delete(contrato);
-            }
-
-        } catch (Exception e) {
-            throw new IllegalStateException("Error while deleting id "+id);
-        }
+    @Override
+    public Contrato convertToEntity(ContratoDTO dto) {
+        Contrato contrato = new Contrato();
+        contrato.setId(dto.getId());
+        contrato.setTipoRegistro(dto.getTipoRegistro());
+        contrato.setAssociadoCredito(dto.isAssociadoCredito());
+        contrato.setAgente(agenteService.getAgenteById(dto.getAgenteId()));
+        contrato.setAutomovel(automovelService.getAutomovelById(dto.getAutomovelId()));
+        contrato.setCliente(clienteService.getClienteById(dto.getClienteId()));
+        return contrato;
     }
 }

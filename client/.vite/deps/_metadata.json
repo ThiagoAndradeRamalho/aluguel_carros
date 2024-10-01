@@ -1,8 +1,109 @@
 {
-  "hash": "a6ce9582",
+  "hash": "b4b0ba29",
   "configHash": "e7c7890f",
-  "lockfileHash": "e3b0c442",
-  "browserHash": "cf78cf72",
-  "optimized": {},
-  "chunks": {}
+  "lockfileHash": "700f4977",
+  "browserHash": "fd7a181f",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "0743fb24",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "37935469",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "7bcd1e29",
+      "needsInterop": false
+    },
+    "primereact/inputtext": {
+      "src": "../../node_modules/primereact/inputtext/inputtext.esm.js",
+      "file": "primereact_inputtext.js",
+      "fileHash": "6f1cd1d2",
+      "needsInterop": false
+    },
+    "primereact/password": {
+      "src": "../../node_modules/primereact/password/password.esm.js",
+      "file": "primereact_password.js",
+      "fileHash": "94d25df3",
+      "needsInterop": false
+    },
+    "primereact/button": {
+      "src": "../../node_modules/primereact/button/button.esm.js",
+      "file": "primereact_button.js",
+      "fileHash": "a3b4fa80",
+      "needsInterop": false
+    },
+    "primereact/message": {
+      "src": "../../node_modules/primereact/message/message.esm.js",
+      "file": "primereact_message.js",
+      "fileHash": "3b1e14bf",
+      "needsInterop": false
+    },
+    "primereact/toast": {
+      "src": "../../node_modules/primereact/toast/toast.esm.js",
+      "file": "primereact_toast.js",
+      "fileHash": "e859d51d",
+      "needsInterop": false
+    },
+    "primereact/menu": {
+      "src": "../../node_modules/primereact/menu/menu.esm.js",
+      "file": "primereact_menu.js",
+      "fileHash": "b68af694",
+      "needsInterop": false
+    },
+    "primereact/card": {
+      "src": "../../node_modules/primereact/card/card.esm.js",
+      "file": "primereact_card.js",
+      "fileHash": "68aa3d30",
+      "needsInterop": false
+    },
+    "primereact/inputnumber": {
+      "src": "../../node_modules/primereact/inputnumber/inputnumber.esm.js",
+      "file": "primereact_inputnumber.js",
+      "fileHash": "e00c1e8d",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-FKKBGSXG": {
+      "file": "chunk-FKKBGSXG.js"
+    },
+    "chunk-355WMTOW": {
+      "file": "chunk-355WMTOW.js"
+    },
+    "chunk-DE2MPJ2P": {
+      "file": "chunk-DE2MPJ2P.js"
+    },
+    "chunk-DMGMT4JE": {
+      "file": "chunk-DMGMT4JE.js"
+    },
+    "chunk-GZUX2DBJ": {
+      "file": "chunk-GZUX2DBJ.js"
+    },
+    "chunk-SI3SA36K": {
+      "file": "chunk-SI3SA36K.js"
+    },
+    "chunk-QPG7G3M7": {
+      "file": "chunk-QPG7G3M7.js"
+    },
+    "chunk-FM4QDL76": {
+      "file": "chunk-FM4QDL76.js"
+    },
+    "chunk-LMS6Y442": {
+      "file": "chunk-LMS6Y442.js"
+    },
+    "chunk-DQGIVY7O": {
+      "file": "chunk-DQGIVY7O.js"
+    },
+    "chunk-UTEJFLXC": {
+      "file": "chunk-UTEJFLXC.js"
+    }
+  }
 }

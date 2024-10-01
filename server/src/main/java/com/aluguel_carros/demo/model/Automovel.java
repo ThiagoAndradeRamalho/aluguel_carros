@@ -1,78 +1,78 @@
-    package com.aluguel_carros.demo.model;
+package com.aluguel_carros.demo.model;
 
-    import java.util.HashSet;
-    import java.util.Set;
+import java.util.HashSet;
+import java.util.Set;
 
-    import jakarta.persistence.Column;
-    import jakarta.persistence.Entity;
-    import jakarta.persistence.GeneratedValue;
-    import jakarta.persistence.GenerationType;
-    import jakarta.persistence.Id;
-    import jakarta.persistence.OneToMany;
-    import jakarta.persistence.Table;
-    import lombok.AllArgsConstructor;
-    import lombok.Data;
-    import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-    @Data
-    @Entity
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Table(name = "Automovel")
-    public class Automovel {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        private Integer id;
+@Data
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIgnoreProperties({"pedidos", "contratos"})
+@Table(name = "Automovel")
+public class Automovel {
 
-        @Column(nullable = false, unique = true)
-        private String matricula;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-        @Column
-        private String marca;
+    @Column
+    private String marca;
 
-        @Column
-        private String modelo;
+    @Column
+    private String modelo;
 
-        @Column(nullable = false, unique = true)
-        private String placa;
+    @Column(nullable = false, unique = true)
+    private String placa;
 
-        @Column
-        private Integer ano;
+    @Column
+    private String ano;
 
-        @Column
-        private String cor;
+    @Column
+    private String cor;
 
-        @Column
-        private String tipoCombustivel;
+    @Column
+    private String tipoCombustivel;
 
-        @Column
-        private String tipoCarro;
+    @Column
+    private String tipoCarro;
 
-        @Column
-        private String transmissao;
+    @Column
+    private String transmissao;
 
-        @Column
-        private Integer numeroPortas;
+    @Column
+    private String numeroPortas;
 
-        @Column
-        private Double consumoCombustivel;
+    @Column
+    private String consumoCombustivel;
 
-        @Column
-        private Integer quilometragemAtual;
+    @Column
+    private String quilometragemAtual;
 
-        @Column
-        private Integer velocidadeMaxima;
+    @Column
+    private String velocidadeMaxima;
 
-        @Column
-        private String imagem;
+    @Column
+    private String imagem;
 
-        @Column
-        private boolean disponivel;
+    @Column
+    private boolean disponivel;
 
-        @OneToMany(mappedBy = "automovel")
-        private Set<Pedido> pedidos = new HashSet<Pedido>();
+    @OneToMany(mappedBy = "automovel")
+    private Set<Pedido> pedidos = new HashSet<Pedido>();
 
-        @OneToMany(mappedBy = "automovel")
-        private Set<Contrato> contratos = new HashSet<Contrato>();
-    }
+    @OneToMany(mappedBy = "automovel")
+    private Set<Contrato> contratos = new HashSet<Contrato>();
+}

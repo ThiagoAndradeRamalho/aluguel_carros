@@ -1,93 +1,80 @@
 package com.aluguel_carros.demo.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
+import com.aluguel_carros.demo.dto.ContratoDTO;
 import com.aluguel_carros.demo.model.Contrato;
 import com.aluguel_carros.demo.service.ContratoService;
 
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
 @RestController
-@RequestMapping("/contrato")
+@RequestMapping("/contratos")
 public class ContratoController {
 
     @Autowired
     private ContratoService contratoService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addContrato(@RequestBody Contrato contrato) {
+    public ResponseEntity<String> addContrato(@RequestBody ContratoDTO contratoDTO) {
         try {
+            Contrato contrato = contratoService.convertToEntity(contratoDTO);
             contratoService.addContrato(contrato);
-             return ResponseEntity.status(HttpStatus.CREATED).body("Contrato criado com sucesso");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Contrato criado com sucesso");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao criar Contrato: " + e.getMessage());
         }
     }
 
     @GetMapping()
-    public ResponseEntity<List<Contrato>> getContratos() {
+    public ResponseEntity<List<ContratoDTO>> getContratos() {
         try {
             List<Contrato> contratos = contratoService.getAllContratos();
-    
-            if (contratos.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-            } else {
-                return ResponseEntity.status(HttpStatus.OK).body(contratos);
-            }
-    
+            List<ContratoDTO> contratosDTO = contratos.stream()
+                .map(contratoService::convertToDTO)
+                .collect(Collectors.toList());
+            return ResponseEntity.ok(contratosDTO);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Contrato> getContrato(@PathVariable Integer id) {
+    public ResponseEntity<ContratoDTO> getContrato(@PathVariable Integer id) {
         try {
             Contrato contrato = contratoService.getContratoById(id);
-
-            if(contrato == null){
+            if (contrato == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }else{
-                return ResponseEntity.status(HttpStatus.OK).body(contrato);
+            } else {
+                return ResponseEntity.ok(contratoService.convertToDTO(contrato));
             }
-
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateContrato(@PathVariable Integer id, @RequestBody Contrato contrato) {
+    public ResponseEntity<String> updateContrato(@PathVariable Integer id, @RequestBody ContratoDTO contratoDTO) {
         try {
-            contratoService.updateContrato(id,contrato);
-             return ResponseEntity.status(HttpStatus.CREATED).body("Contrato atualizado com sucesso");
+            Contrato contrato = contratoService.convertToEntity(contratoDTO);
+            contratoService.updateContrato(id, contrato);
+            return ResponseEntity.ok("Contrato atualizado com sucesso");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao atualizar Contrato: " + e.getMessage());
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteContrato(@PathVariable Integer id){
-
+    public ResponseEntity<String> deleteContrato(@PathVariable Integer id) {
         try {
             contratoService.deleteContrato(id);
-             return ResponseEntity.status(HttpStatus.CREATED).body("Contrato deleatdo com sucesso");
+            return ResponseEntity.ok("Contrato deletado com sucesso");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao deletar Contrato: " + e.getMessage());
         }
-
-    }   
-
+    }
 }

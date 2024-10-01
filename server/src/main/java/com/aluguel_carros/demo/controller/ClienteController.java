@@ -1,92 +1,80 @@
 package com.aluguel_carros.demo.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
+import com.aluguel_carros.demo.dto.ClienteDTO;
 import com.aluguel_carros.demo.model.Cliente;
 import com.aluguel_carros.demo.service.ClienteService;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/clientes")
 public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addCliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<String> addCliente(@RequestBody ClienteDTO clienteDTO) {
         try {
-             clienteService.addCliente(cliente);
-             return ResponseEntity.status(HttpStatus.CREATED).body("Cliente criado com sucesso");
+            Cliente cliente = clienteService.convertToEntity(clienteDTO);
+            clienteService.addCliente(cliente);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Cliente criado com sucesso");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao criar cliente: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao criar Cliente: " + e.getMessage());
         }
     }
 
     @GetMapping()
-    public ResponseEntity<List<Cliente>> getClientes() {
+    public ResponseEntity<List<ClienteDTO>> getClientes() {
         try {
             List<Cliente> clientes = clienteService.getAllClientes();
-    
-            if (clientes.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-            } else {
-                return ResponseEntity.status(HttpStatus.OK).body(clientes);
-            }
-    
+            List<ClienteDTO> clientesDTO = clientes.stream()
+                .map(clienteService::convertToDTO)
+                .collect(Collectors.toList());
+            return ResponseEntity.ok(clientesDTO);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> getCliente(@PathVariable Integer id) {
+    public ResponseEntity<ClienteDTO> getCliente(@PathVariable Integer id) {
         try {
             Cliente cliente = clienteService.getClienteById(id);
-
-            if(cliente == null){
+            if (cliente == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }else{
-                return ResponseEntity.status(HttpStatus.OK).body(cliente);
+            } else {
+                return ResponseEntity.ok(clienteService.convertToDTO(cliente));
             }
-
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateCliente(@PathVariable Integer id, @RequestBody Cliente cliente) {
+    public ResponseEntity<String> updateCliente(@PathVariable Integer id, @RequestBody ClienteDTO clienteDTO) {
         try {
-            clienteService.updateCliente(id,cliente);
-             return ResponseEntity.status(HttpStatus.CREATED).body("Cliente atualizado com sucesso");
+            Cliente cliente = clienteService.convertToEntity(clienteDTO);
+            clienteService.updateCliente(id, cliente);
+            return ResponseEntity.ok("Cliente atualizado com sucesso");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao atualizar cliente: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao atualizar Cliente: " + e.getMessage());
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteCliente(@PathVariable Integer id){
-
+    public ResponseEntity<String> deleteCliente(@PathVariable Integer id) {
         try {
             clienteService.deleteCliente(id);
-             return ResponseEntity.status(HttpStatus.CREATED).body("Cliente deleatdo com sucesso");
+            return ResponseEntity.ok("Cliente deletado com sucesso");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao deletar cliente: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao deletar Cliente: " + e.getMessage());
         }
-
-    }    
-    
+    }
 }
