@@ -2,6 +2,8 @@ package com.aluguel_carros.demo.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import com.aluguel_carros.demo.service.AutomovelService;
 import com.aluguel_carros.demo.service.ClienteService;
 import com.aluguel_carros.demo.service.ContratoService;
 import com.aluguel_carros.demo.service.PedidoService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class PedidoServiceImpl implements PedidoService {
@@ -41,21 +45,52 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     public Pedido getPedidoById(Integer id) {
+        // Verifica se o ID não é nulo antes de buscar
+        if (id == null) {
+            return null;
+        }
         return pedidoRepository.findById(id).orElse(null);
     }
 
     @Override
     public void updatePedido(Integer id, PedidoDTO pedidoDTO) {
-        if (pedidoRepository.existsById(id)) {
-            Pedido pedido = convertToEntity(pedidoDTO);
-            pedido.setId(id); // Define o ID do pedido que está sendo atualizado
+        // Verifica se o ID não é nulo antes de buscar
+        if (id == null) {
+            throw new IllegalArgumentException("ID do pedido não pode ser nulo");
+        }
+
+        Optional<Pedido> optionalPedido = pedidoRepository.findById(id);
+        if (optionalPedido.isPresent()) {
+            Pedido pedido = optionalPedido.get();
+
+            // Atualiza os campos do pedido com os dados do DTO
+            pedido.setStatus(pedidoDTO.getStatus());
+
+            if (pedidoDTO.getDataInicio() != null) {
+                String dataInicioStr = pedidoDTO.getDataInicio().replace("Z", "");
+                pedido.setDataInicio(LocalDateTime.parse(dataInicioStr));
+            }
+            if (pedidoDTO.getDataFim() != null) {
+                String dataFimStr = pedidoDTO.getDataFim().replace("Z", "");
+                pedido.setDataFim(LocalDateTime.parse(dataFimStr));
+            }
+
+            pedido.setCliente(clienteService.getClienteById(pedidoDTO.getClienteId()));
+            pedido.setContrato(contratoService.getContratoById(pedidoDTO.getContratoId()));
+            pedido.setAutomovel(automovelService.getAutomovelById(pedidoDTO.getAutomovelId()));
+
             pedidoRepository.save(pedido);
+        } else {
+            throw new EntityNotFoundException("Pedido not found with id " + id);
         }
     }
 
     @Override
     public void deletePedido(Integer id) {
-        pedidoRepository.deleteById(id);
+        // Verifica se o ID não é nulo antes de deletar
+        if (id != null) {
+            pedidoRepository.deleteById(id);
+        }
     }
 
     @Override
@@ -74,7 +109,7 @@ public class PedidoServiceImpl implements PedidoService {
         Pedido pedido = new Pedido();
         pedido.setId(dto.getId());
         pedido.setStatus(dto.getStatus());
-        
+
         if (dto.getDataInicio() != null) {
             String dataInicioStr = dto.getDataInicio().replace("Z", "");
             pedido.setDataInicio(LocalDateTime.parse(dataInicioStr));
@@ -83,7 +118,7 @@ public class PedidoServiceImpl implements PedidoService {
             String dataFimStr = dto.getDataFim().replace("Z", "");
             pedido.setDataFim(LocalDateTime.parse(dataFimStr));
         }
-        
+
         pedido.setCliente(clienteService.getClienteById(dto.getClienteId()));
         pedido.setContrato(contratoService.getContratoById(dto.getContratoId()));
         pedido.setAutomovel(automovelService.getAutomovelById(dto.getAutomovelId()));

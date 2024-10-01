@@ -24,9 +24,10 @@ body {
 }
 
 .vertical-menu {
-    width: 100%;
+    width: 300px !important;
+    background-color: #f4f4f4;
+    border: transparent;
 }
-
 .car-content {
     width: 80%;
     display: flex;

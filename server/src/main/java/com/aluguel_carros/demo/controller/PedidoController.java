@@ -56,6 +56,8 @@ public class PedidoController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updatePedido(@PathVariable Integer id, @RequestBody PedidoDTO pedidoDTO) {
+        System.out.println();
+        System.out.println(pedidoDTO.toString());
         try {
             pedidoService.updatePedido(id, pedidoDTO);
             return ResponseEntity.status(HttpStatus.OK).body("Pedido atualizado com sucesso");

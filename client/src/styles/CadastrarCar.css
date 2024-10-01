@@ -12,3 +12,8 @@
     padding-top: 4.2rem;
 }
 
+.vertical-menu {
+    width: 300px !important;
+    background-color: #f4f4f4;
+    border: transparent;
+}

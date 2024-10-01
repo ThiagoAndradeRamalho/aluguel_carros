@@ -38,7 +38,8 @@ export const PedidoService = {
 
     updatePedido: async (id, pedido) => {
         try {
-            const response = await axios.put(`${API_URL}/${id}`, pedido);
+            console.log(pedido)
+            const response = await axios.put(`${API_URL}/update/${id}`, pedido);
             return response.data;
         } catch (error) {
             console.error(`Erro ao atualizar o pedido com ID ${id}:`, error);

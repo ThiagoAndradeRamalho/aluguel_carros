@@ -94,3 +94,9 @@ th {
     padding: 1rem;
     border: #fafafa;
 }
+
+.vertical-menu {
+    width: 300px !important;
+    background-color: #f4f4f4;
+    border: transparent;
+}
