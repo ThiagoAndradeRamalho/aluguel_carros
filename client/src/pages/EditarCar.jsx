@@ -257,7 +257,7 @@ const CarPage = () => {
                                 <td>
                                     <input
                                         type="text"
-                                        name="iamgem"
+                                        name="imagem"
                                         value={car.imagem}
                                         onChange={handleInputChange}
                                     />

@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 85vh;
+    height: 88vh;
     width: 90vw;
     margin: auto;
     border-radius: 10px;
@@ -30,8 +30,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    padding: 4rem;
+    height: 100%;
+    padding: 2rem; 
 }
 
 .register-card h2 {
@@ -56,9 +56,19 @@
 
 .login-link {
     text-align: center;
-    margin-top: 1rem; /* Espaço acima da seção */
+    margin-top: 1rem; 
 }
 
 .input-field {
-    width: 30rem;
+    width: 25rem; 
+}
+
+.register-button:hover {
+    background-color: #005f52; 
+}
+
+@media (max-width: 768px) {
+    .input-field {
+        width: 90%; 
+    }
 }

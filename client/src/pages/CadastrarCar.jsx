@@ -79,7 +79,7 @@ const CadastrarPage = () => {
                     </div>
                     <div className='form-line'>
                         <InputText name="placa" placeholder="Placa" value={automovel.placa} onChange={handleChange} required className="form-input" />
-                        <InputNumber style={{ width: '100%' }} name="ano" placeholder="Ano" value={automovel.ano} onValueChange={(e) => handleNumberChange('ano', e.value)} className="form-input" />
+                        <InputNumber style={{ width: '104%' }} name="ano" placeholder="Ano" value={automovel.ano} onValueChange={(e) => handleNumberChange('ano', e.value)} className="form-input" />
                     </div>
                     <div className='form-line'>
                         <InputText name="cor" placeholder="Cor" value={automovel.cor} onChange={handleChange} className="form-input" />
