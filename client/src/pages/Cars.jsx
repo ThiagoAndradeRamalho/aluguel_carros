@@ -46,7 +46,13 @@ const CarPage = () => {
                         title={car.modelo}
                         subTitle={car.marca}
                         style={{ width: '25em', height: '27em' }}
-                        header={<img alt={car.modelo} src={car.imagem} />}
+                        header={
+                            <img
+                                alt={car.modelo}
+                                src={car.imagem}
+                                style={{ width: '100%', height: '200px', objectFit: 'cover' }} 
+                            />
+                        }
                         className="car-card"
                     >
                         <Button

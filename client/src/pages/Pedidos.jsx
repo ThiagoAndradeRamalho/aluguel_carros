@@ -11,7 +11,7 @@ import { Toast } from 'primereact/toast';
 
 import logo from '../assets/logo.png';
 import '../styles/Pedidos.css';
-import { PedidoService } from '../services/PedidosService'; // Importando o serviço de pedidos
+import { PedidoService } from '../services/PedidosService'; 
 
 const Pedidos = () => {
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ const Pedidos = () => {
     useEffect(() => {
         const fetchPedidos = async () => {
             try {
-                const pedidosData = await PedidoService.getAllPedidos(); // Obtendo todos os pedidos
+                const pedidosData = await PedidoService.getAllPedidos(); 
                 setPedidos(pedidosData);
                 console.log(pedidosData)
             } catch (error) {
@@ -45,8 +45,15 @@ const Pedidos = () => {
         fetchPedidos();
     }, []);
 
-    const handleCancel = (id) => {
-        console.log(`Pedido ${id} cancelado`);
+    const handleCancel = async (id) => {
+        try {
+            await PedidoService.deletePedido(id);
+            setPedidos((prevPedidos) => prevPedidos.filter(pedido => pedido.id !== id));
+            toast.current.show({ severity: 'success', summary: 'Sucesso', detail: `Pedido ${id} cancelado com sucesso`, life: 3000 });
+        } catch (error) {
+            console.error(`Erro ao cancelar o pedido com ID ${id}:`, error);
+            toast.current.show({ severity: 'error', summary: 'Erro', detail: `Erro ao cancelar o pedido ${id}`, life: 3000 });
+        }
     };
 
     const formatDate = (dateString) => {
@@ -57,7 +64,7 @@ const Pedidos = () => {
 
     const parseDate = (date) => {
         if (!date) return null;
-        return new Date(date).toISOString(); // Converte a data para o formato ISO
+        return new Date(date).toISOString(); 
     };
 
     const openEditDialog = (rowData) => {
@@ -70,11 +77,10 @@ const Pedidos = () => {
             console.log(selectedPedido)
             const updatedPedido = {
                 ...selectedPedido,
-                dataInicio: parseDate(selectedPedido.dataInicio), // Converter para ISO
-                dataFim: parseDate(selectedPedido.dataFim),       // Converter para ISO
-                dataPedido: parseDate(selectedPedido.dataPedido)  // Converter para ISO
+                dataInicio: parseDate(selectedPedido.dataInicio), 
+                dataPedido: parseDate(selectedPedido.dataPedido)
             };
-            await PedidoService.updatePedido(updatedPedido.id, updatedPedido); // Atualizar pedido no serviço
+            await PedidoService.updatePedido(updatedPedido.id, updatedPedido); 
             const updatedPedidos = pedidos.map(p => p.id === updatedPedido.id ? updatedPedido : p);
             setPedidos(updatedPedidos);
             setEditDialog(false);
@@ -103,6 +109,14 @@ const Pedidos = () => {
                     style={{ color: 'red' }}
                     tooltip='Cancelar'
                     aria-label="Cancelar"
+                />
+                <Button
+                    icon="pi pi-file"
+                    className="p-button-rounded p-button-text"
+                    onClick={() => navigate(`/contrato/${rowData.id}`)} 
+                    style={{ color: '#5f6368' }}
+                    tooltip='Contrato'
+                    aria-label="Ver Contrato"
                 />
             </>
         );

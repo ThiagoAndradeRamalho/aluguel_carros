@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/pedido'; // Ajuste para a URL da sua API
+const API_URL = 'http://localhost:8080/pedido';
 
 export const PedidoService = {
 
@@ -49,7 +49,7 @@ export const PedidoService = {
 
     deletePedido: async (id) => {
         try {
-            const response = await axios.delete(`${API_URL}/${id}`);
+            const response = await axios.delete(`${API_URL}/delete/${id}`);
             return response.data;
         } catch (error) {
             console.error(`Erro ao deletar o pedido com ID ${id}:`, error);

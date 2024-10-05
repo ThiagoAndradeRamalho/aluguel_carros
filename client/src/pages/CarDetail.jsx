@@ -1,4 +1,4 @@
-import { useEffect, useState , useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Menu } from 'primereact/menu';
 import { Button } from 'primereact/button';
@@ -62,7 +62,7 @@ const CarPage = () => {
                 dataFim: dateRange[1],
                 status: 'Pendente',
                 clienteId: 1,
-                automovelId: car.id ,
+                automovelId: car.id,
                 contratoId: 1
             };
 
@@ -81,7 +81,7 @@ const CarPage = () => {
 
     return (
         <section className="home-section">
-             <Toast ref={toast} />
+            <Toast ref={toast} />
             <div className="menu-container">
                 <img src={logo} alt="Logo" className="logo" />
                 <Menu model={items} className="vertical-menu" />
@@ -177,18 +177,18 @@ const CarPage = () => {
                             />
                         </div>
 
-                        <Calendar
-                            value={dateRange}
-                            onChange={(e) => setDateRange(e.value)}
-                            selectionMode="range"
-                            style={{ width: '100%', borderRadius: '8px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}
-                            placeholder="Selecione um intervalo de datas"
-                        />
-
+                        {/* Exibe a data de início e devolução */}
                         {dateRange[0] && dateRange[1] && (
                             <div style={{ marginTop: '1em', fontWeight: 'bold', color: '#4CAF50', border: '1px solid #4CAF50', borderRadius: '5px', padding: '0.5em' }}>
                                 <p>Data de Início: <strong>{dateRange[0].toLocaleDateString()}</strong></p>
                                 <p>Data de Devolução: <strong>{dateRange[1].toLocaleDateString()}</strong></p>
+                            </div>
+                        )}
+
+                        {/* Exibe uma mensagem de erro se a data de devolução for anterior à data de início */}
+                        {dateRange[0] && dateRange[1] && dateRange[1] < dateRange[0] && (
+                            <div style={{ marginTop: '1em', fontWeight: 'bold', color: '#FF0000', border: '1px solid #FF0000', borderRadius: '5px', padding: '0.5em' }}>
+                                <p>A data de devolução não pode ser anterior à data de início.</p>
                             </div>
                         )}
                     </div>
@@ -196,9 +196,15 @@ const CarPage = () => {
                     <div className="modal-footer" style={{ display: 'flex', justifyContent: 'space-between', padding: '1em', borderTop: '1px solid #ddd' }}>
                         <Button
                             label="Confirmar"
-                            onClick={handleRent}
+                            onClick={() => {
+                                if (dateRange[0] && dateRange[1] && dateRange[1] >= dateRange[0]) {
+                                    handleRent();
+                                } else {
+                                    alert('A data de devolução não pode ser anterior à data de início.');
+                                }
+                            }}
                             className="p-button"
-                            disabled={!dateRange[0] || !dateRange[1]} 
+                            disabled={!dateRange[0] || !dateRange[1]}
                             style={{ flex: 1, marginRight: '1em', backgroundColor: '#007362', border: 'transparent' }}
                         />
                         <Button
